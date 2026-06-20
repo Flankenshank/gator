@@ -20,7 +20,12 @@
   "homepage": "https://github.com/Flankenshank/gator#readme",
   "devDependencies": {
     "@types/node": "^25.9.3",
+    "drizzle-kit": "^0.31.10",
     "tsx": "^4.22.4",
     "typescript": "^6.0.3"
+  },
+  "dependencies": {
+    "drizzle-orm": "^0.45.2",
+    "postgres": "^3.4.9"
   }
 }
