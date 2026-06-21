@@ -1,8 +1,10 @@
-import { runCommand,CommandsRegistry,registerCommand,handlerLogin } from "./commands";
+import { runCommand, CommandsRegistry, registerCommand } from "./commands/commands";
+import { handlerLogin, handlerRegister } from "./commands/users";
 
-function main() {
+async function main() {
   let registry: CommandsRegistry = {};
   registerCommand(registry, "login", handlerLogin);
+  registerCommand(registry, "register", handlerRegister);
   const args = process.argv.slice(2);
   if (args.length === 0) {
     console.error("No command provided");
@@ -11,7 +13,7 @@ function main() {
   const cmdName = args[0];
   const cmdArgs = args.slice(1);
   try {
-    runCommand(registry, cmdName, ...cmdArgs);
+    await runCommand(registry, cmdName, ...cmdArgs);
   } catch (error) {
     if (error instanceof Error) {
       console.error("Error:", error.message);
@@ -20,6 +22,8 @@ function main() {
     }
     process.exit(1);
   }
+  process.exit(0)
 }
 
 main();
+
