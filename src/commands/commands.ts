@@ -1,5 +1,5 @@
 import { setUser } from "../config";
-import { register } from "../lib/db/queries/users";
+import { register, deleteUsers } from "../lib/db/queries/users";
 
 type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
 
@@ -19,4 +19,8 @@ export async function runCommand(registry: CommandsRegistry, cmdName: string, ..
   } else {
     throw new Error(`Unknown command: ${cmdName}`);
   }
+}
+
+export async function reset(cmdName: string, ...args: string[]): Promise<void> {
+  await deleteUsers();
 }
