@@ -1,4 +1,4 @@
-import { createUser, getUserByName, deleteUsers } from "../lib/db/queries/users";
+import { createUser, getUserByName, deleteUsers, getUsers } from "../lib/db/queries/users";
 import { setUser, readConfig } from "../config";
 
 export async function handlerLogin(cmdName: string, ...args: string[]): Promise<void> {
@@ -29,4 +29,16 @@ export async function handlerReset(cmdName: string, ...args: string[]): Promise<
   await deleteUsers();
   console.log("Database reset successfully!");
   process.exit(0);
+}
+
+export async function users(cmdName: string, ...args: string[]): Promise<void> {
+  const allUsers = await getUsers();
+  const currentUser = readConfig().currentUserName;
+  for (const user of allUsers) {
+    if (user.name === currentUser) {
+      console.log(` * ${user.name} (current)`);
+    } else {
+      console.log(` * ${user.name}`);
+    }
+  }
 }

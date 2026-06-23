@@ -1,11 +1,12 @@
 import { runCommand, CommandsRegistry, registerCommand } from "./commands/commands";
-import { handlerLogin, handlerRegister, handlerReset } from "./commands/users";
+import { handlerLogin, handlerRegister, handlerReset, users } from "./commands/users";
 
 async function main() {
   let registry: CommandsRegistry = {};
   registerCommand(registry, "login", handlerLogin);
   registerCommand(registry, "register", handlerRegister);
   registerCommand(registry, "reset", handlerReset);
+  registerCommand(registry, "users", users);
   const args = process.argv.slice(2);
   if (args.length === 0) {
     console.error("No command provided");

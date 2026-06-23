@@ -29,3 +29,7 @@ export async function register(cmdName: string, ...args: string[]): Promise<void
 export async function deleteUsers() {
   await db.delete(users);
 }
+
+export async function getUsers() {
+  return await db.select().from(users);
+}
