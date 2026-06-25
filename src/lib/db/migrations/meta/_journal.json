@@ -8,6 +8,13 @@
       "when": 1781973669035,
       "tag": "0000_keen_shaman",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1782418540706,
+      "tag": "0001_chief_karma",
+      "breakpoints": true
     }
   ]
 }
