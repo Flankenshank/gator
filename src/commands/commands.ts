@@ -1,7 +1,6 @@
-import { setUser } from "../config";
-import { register, deleteUsers, getUsers } from "../lib/db/queries/users";
+import { deleteUsers } from "../lib/db/queries/users";
 import { readConfig } from "../config";
-import { createFeed } from "../lib/db/queries/feeds";
+import { getUser } from "../lib/db/queries/users";
 
 type CommandHandler = (cmdName: string, ...args: string[]) => Promise<void>;
 

@@ -1,7 +1,8 @@
 import { runCommand, CommandsRegistry, registerCommand } from "./commands/commands";
 import { handlerLogin, handlerRegister, handlerReset, users } from "./commands/users";
 import { handlerAgg } from "./commands/aggregate";
-import { handlerAddFeed } from "./commands/feeds";
+import { handlerAddFeed, handlerGetFeeds } from "./commands/feeds";
+import { handlerFollow, handlerFollowing } from "./commands/feed-follows";
 
 async function main() {
   let registry: CommandsRegistry = {};
@@ -11,6 +12,9 @@ async function main() {
   registerCommand(registry, "users", users);
   registerCommand(registry, "agg", handlerAgg);
   registerCommand(registry, "addfeed", handlerAddFeed);
+  registerCommand(registry, "feeds", handlerGetFeeds);
+  registerCommand(registry, "follow", handlerFollow);
+  registerCommand(registry, "following", handlerFollowing);
   const args = process.argv.slice(2);
   if (args.length === 0) {
     console.error("No command provided");

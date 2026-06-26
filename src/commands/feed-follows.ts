@@ -1,0 +1,35 @@
+import { readConfig } from "../config";
+import { getUser } from "../lib/db/queries/users";
+import { getFeedByUrl } from "../lib/db/queries/feeds";
+import { createFeedFollow, getFeedFollowsForUser } from "../lib/db/queries/feed-follows";
+
+export function printFeedFollow(userName: string, feedName: string) {
+    console.log(`${feedName} - ${userName}`)
+}
+
+export async function handlerFollow(cmdName: string, ...args: string[]) {
+    if (args.length !== 1) {
+        throw new Error(`usage: ${cmdName} <url>`);
+    }
+    const url = args[0];
+    const config = readConfig();
+    const user = await getUser(config.currentUserName);
+    const feed = await getFeedByUrl(url)
+    if (user == undefined || feed == undefined) {
+        throw new Error(`user of feed undefined`);
+    }
+    await createFeedFollow(user.id, feed.id);
+    printFeedFollow(user.name, feed.name)
+}
+
+export async function handlerFollowing(cmdName: string, ...args: string[]) {
+    const config = readConfig();
+    const user = await getUser(config.currentUserName);
+    if (user == undefined) {
+        throw new Error(`user not found`);
+    }
+    const feeds = await getFeedFollowsForUser(user.id);
+    for (const feed of feeds) {
+        console.log(feed.feedName)
+    }
+}
