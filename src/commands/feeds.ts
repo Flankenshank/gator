@@ -6,17 +6,12 @@ import { getFeeds } from "../lib/db/queries/feeds";
 import { createFeedFollow } from "../lib/db/queries/feed-follows";
 import { printFeedFollow } from "./feed-follows";
 
-export async function handlerAddFeed(cmdName: string, ...args: string[]) {
+export async function handlerAddFeed(cmdName: string, user: User, ...args: string[]) {
     if (args.length !== 2) {
         throw new Error(`usage: ${cmdName} <name> <url>`);
     }
     const name = args[0];
     const url = args[1];
-    const currentUser = readConfig().currentUserName;
-    const user = await getUser(currentUser);
-    if (!user) {
-        throw new Error(`Current user ${currentUser} does not exist`);  
-    }
     const feed = await createFeed(name, url, user.id);
     if (!feed) {
         throw new Error(`Failed to create feed ${name}`);

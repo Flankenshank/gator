@@ -2,18 +2,17 @@ import { readConfig } from "../config";
 import { getUser } from "../lib/db/queries/users";
 import { getFeedByUrl } from "../lib/db/queries/feeds";
 import { createFeedFollow, getFeedFollowsForUser } from "../lib/db/queries/feed-follows";
+import { User } from "../lib/db/schema";
 
 export function printFeedFollow(userName: string, feedName: string) {
     console.log(`${feedName} - ${userName}`)
 }
 
-export async function handlerFollow(cmdName: string, ...args: string[]) {
+export async function handlerFollow(cmdName: string, user: User, ...args: string[]) {
     if (args.length !== 1) {
         throw new Error(`usage: ${cmdName} <url>`);
     }
     const url = args[0];
-    const config = readConfig();
-    const user = await getUser(config.currentUserName);
     const feed = await getFeedByUrl(url)
     if (user == undefined || feed == undefined) {
         throw new Error(`user of feed undefined`);
@@ -22,9 +21,7 @@ export async function handlerFollow(cmdName: string, ...args: string[]) {
     printFeedFollow(user.name, feed.name)
 }
 
-export async function handlerFollowing(cmdName: string, ...args: string[]) {
-    const config = readConfig();
-    const user = await getUser(config.currentUserName);
+export async function handlerFollowing(cmdName: string, user: User, ...args: string[]) {
     if (user == undefined) {
         throw new Error(`user not found`);
     }
