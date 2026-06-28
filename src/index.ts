@@ -2,7 +2,7 @@ import { runCommand, CommandsRegistry, registerCommand } from "./commands/comman
 import { handlerLogin, handlerRegister, handlerReset, users } from "./commands/users";
 import { handlerAgg } from "./commands/aggregate";
 import { handlerAddFeed, handlerGetFeeds } from "./commands/feeds";
-import { handlerFollow, handlerFollowing } from "./commands/feed-follows";
+import { handlerFollow, handlerFollowing, handlerUnfollow } from "./commands/feed-follows";
 import { middlewareLoggedIn } from "./middleware";
 
 async function main() {
@@ -16,6 +16,7 @@ async function main() {
   registerCommand(registry, "feeds", handlerGetFeeds);
   registerCommand(registry, "follow", middlewareLoggedIn(handlerFollow));
   registerCommand(registry, "following", middlewareLoggedIn(handlerFollowing));
+  registerCommand(registry, "unfollow", middlewareLoggedIn(handlerUnfollow))
   const args = process.argv.slice(2);
   if (args.length === 0) {
     console.error("No command provided");
